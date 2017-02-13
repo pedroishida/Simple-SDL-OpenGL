@@ -108,11 +108,11 @@ unsigned short int Canvas::HandleEvents()
             if (SDLK_ESCAPE == event.key.keysym.sym) {
                 return 0;
             } else if (SDLK_SPACE == event.key.keysym.sym) {
-                return 1;
+                return CANVAS_KEY_SPACE;
             }
         }
     }
-    return -1;
+    return CANVAS_KEY_EMPTY;
 }
 
 void Canvas::Clear(unsigned short r, unsigned short g, unsigned short b)
@@ -134,4 +134,15 @@ void Canvas::Quit()
 int Canvas::GetError()
 {
     return error_code;
+}
+
+void Canvas::DrawPolygon(double (*vertices)[2], unsigned int size)
+{
+    if (NULL != vertices && 0 < size) {
+        glBegin(GL_POLYGON);
+        for (i = 0; i < size; i++) {
+            glVertex2f(vertices[i][0], vertices[i][1]);
+        }
+        glEnd();
+    }
 }

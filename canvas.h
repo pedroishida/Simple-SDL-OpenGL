@@ -9,6 +9,9 @@
 #include <SDL2/SDL_opengl.h>
 #include <GL/glu.h>
 
+#define CANVAS_KEY_EMPTY -1
+#define CANVAS_KEY_SPACE 1
+
 class Canvas
 {
     unsigned int i, j;
@@ -36,19 +39,6 @@ class Canvas
         );
         void Show();
         int GetError();
-        template <typename xy>
-        void DrawPolygon(xy*, unsigned int);
+        void DrawPolygon(double (*)[2], unsigned int);
 };
-
-template <typename xy>
-void Canvas::DrawPolygon(xy* vertices, unsigned int size)
-{
-    if (NULL != vertices && 0 < size) {
-        glBegin(GL_POLYGON);
-        for (i = 0; i < size; i++) {
-            glVertex2f(vertices[i].x, vertices[i].y);
-        }
-        glEnd();
-    }
-}
 #endif
