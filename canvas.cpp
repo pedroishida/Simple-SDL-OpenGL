@@ -32,39 +32,36 @@ int Canvas::Init()
     if (0 > SDL_Init(SDL_INIT_VIDEO)) {
         std::fprintf(stderr,"SDL_Init failed:\n%s\n", SDL_GetError());
         return 1;
-    } else {
+    }
 
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-        display = SDL_CreateWindow(
-            "SDL OpenGL",
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
-            width,
-            height,
-            SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-        );
-        if (NULL == display) {
-            std::fprintf(stderr, "SDL_CreateWindow failed:\n%s\n", SDL_GetError());
-            return 2;
-        } else {
+    display = SDL_CreateWindow(
+        "SDL OpenGL",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        width,
+        height,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+    );
+    if (NULL == display) {
+        std::fprintf(stderr, "SDL_CreateWindow failed:\n%s\n", SDL_GetError());
+        return 2;
+    }
 
-            context = SDL_GL_CreateContext(display);
-            if (NULL == context) {
-                std::fprintf(stderr, "SDL_GL_CreateContext failed:\n%s\n", SDL_GetError());
-                return 3;
-            } else {
+    context = SDL_GL_CreateContext(display);
+    if (NULL == context) {
+        std::fprintf(stderr, "SDL_GL_CreateContext failed:\n%s\n", SDL_GetError());
+        return 3;
+    }
 
-                if (0 > SDL_GL_SetSwapInterval(1)) {
-                    std::fprintf(stderr, "SDL_GL_SetSwapInterval failed:\n%s\n", SDL_GetError());
-                }
+    if (0 > SDL_GL_SetSwapInterval(1)) {
+        std::fprintf(stderr, "SDL_GL_SetSwapInterval failed:\n%s\n", SDL_GetError());
+    }
 
-                if (!InitGL()) {
-                    return 4;
-                }
-            }
-        }
+    if (!InitGL()) {
+        return 4;
     }
     return 0;
 }
